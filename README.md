@@ -1,4 +1,13 @@
-# 🌟 Carte de Visite Numérique - Siby Lassana
+#  Carte de Visite Numérique - Siby Lassana
+
+<div align="center">
+  <img src="images/qr-code.png" alt="SenQrcode Banner" width="50%">
+  
+  [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+  [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/sibylassana95/profilcard/issues)
+</div>
+
+## 🌟 À Propos
 
 Une carte de visite numérique moderne et responsive, conçue pour présenter votre profil professionnel et vos réseaux sociaux.
 
@@ -72,7 +81,7 @@ Les contributions sont les bienvenues ! N'hésitez pas à :
 
 ## 📄 Licence
 
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
 ## 👨‍💻 Auteur
 
