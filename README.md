@@ -41,7 +41,7 @@ Une carte de visite numérique moderne et responsive, conçue pour présenter vo
 
 1. Clonez le dépôt :
 ```bash
-git clone https://github.com/votre-username/mon-profil.git
+git clone https://github.com/sibylassana95/profilcard.git
 ```
 
 2. Ouvrez `index.html` dans votre navigateur
