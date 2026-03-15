@@ -33,23 +33,42 @@
   <link rel="icon" type="image/jpg" href="./images/siby.jpg">
   <link rel="apple-touch-icon" href="./images/siby.jpg">
   
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
+        fontFamily: {
+          'outfit': ['Outfit', 'sans-serif'],
+        },
         extend: {
           colors: {
             dark: {
-              50: '#1a1a1a',
-              100: '#2d2d2d',
-              200: '#404040',
+              50: '#0a0a0a',
+              100: '#171717',
+              200: '#262626',
+              300: '#404040',
+            },
+            primary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
             }
           },
           animation: {
-            'fade-in': 'fadeIn 0.5s ease-in-out',
-            'slide-up': 'slideUp 0.5s ease-out',
+            'fade-in': 'fadeIn 0.6s ease-out',
+            'slide-up': 'slideUp 0.6s ease-out',
+            'scale-in': 'scaleIn 0.4s ease-out',
+            'float': 'float 3s ease-in-out infinite',
           },
           keyframes: {
             fadeIn: {
@@ -57,8 +76,16 @@
               '100%': { opacity: '1' },
             },
             slideUp: {
-              '0%': { transform: 'translateY(20px)', opacity: '0' },
+              '0%': { transform: 'translateY(30px)', opacity: '0' },
               '100%': { transform: 'translateY(0)', opacity: '1' },
+            },
+            scaleIn: {
+              '0%': { transform: 'scale(0.9)', opacity: '0' },
+              '100%': { transform: 'scale(1)', opacity: '1' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
             }
           }
         }
@@ -66,122 +93,179 @@
     }
   </script>
 
-  <!-- Optimisation des performances -->
   <style>
-    /* Critical CSS */
-    .animate-fade-in {
-      animation: fadeIn 0.5s ease-in-out;
+    body {
+      font-family: 'Outfit', sans-serif;
     }
-    .animate-slide-up {
-      animation: slideUp 0.5s ease-out;
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .dark .glass-card {
+      background: rgba(23, 23, 23, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .gradient-border {
+      position: relative;
+    }
+    .gradient-border::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      padding: 2px;
+      background: linear-gradient(135deg, #0ea5e9, #8b5cf6, #ec4899);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+    .link-card {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .link-card:hover {
+      transform: translateY(-4px) scale(1.02);
+    }
+    .link-card:hover .link-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+    .link-icon {
+      transition: all 0.3s ease;
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-dark-50 dark:to-dark-100 min-h-screen p-4 md:p-8 transition-colors duration-300">
+<body class="bg-gradient-to-br from-slate-100 via-white to-blue-50 dark:from-dark-50 dark:via-dark-100 dark:to-slate-900 min-h-screen p-4 md:p-6 transition-all duration-500 font-outfit">
+  <!-- Background Pattern -->
+  <div class="fixed inset-0 opacity-30 dark:opacity-10 pointer-events-none">
+    <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25px 25px, rgba(14, 165, 233, 0.15) 2px, transparent 0); background-size: 50px 50px;"></div>
+  </div>
 
   <!-- Bouton de basculement du thème -->
-  <button id="theme-toggle" class="fixed top-4 right-4 p-2 rounded-full bg-white dark:bg-dark-100 text-gray-800 dark:text-white shadow-lg hover:shadow-xl transition-all duration-300 z-50">
-    <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <button id="theme-toggle" class="fixed top-4 right-4 p-3 rounded-2xl bg-white/80 dark:bg-dark-200/80 backdrop-blur-md text-gray-700 dark:text-gray-200 shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 z-50 border border-gray-200/50 dark:border-gray-700/50">
+    <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
     </svg>
-    <svg class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
     </svg>
   </button>
 
-  <div class="max-w-6xl mx-auto">
-    <div class="bg-white dark:bg-dark-100 shadow-2xl rounded-3xl overflow-hidden animate-fade-in">
+  <div class="max-w-4xl mx-auto relative">
+    <!-- Main Card -->
+    <div class="glass-card shadow-2xl rounded-3xl overflow-hidden animate-fade-in">
       <div class="flex flex-col lg:flex-row">
         
-        <!-- Profil -->
-        <div class="bg-gradient-to-br from-blue-500 to-blue-600 dark:from-blue-600 dark:to-blue-700 p-8 lg:p-12 flex flex-col items-center lg:items-start text-center lg:text-left lg:w-1/3">
-          <div class="animate-slide-up">
-            <img src="./images/siby.jpg" alt="Siby Lassana" class="w-32 h-32 rounded-full border-4 border-white shadow-xl mb-6">
-            <h1 class="text-3xl font-bold text-white mb-2">Siby Lassana</h1>
-            <p class="text-blue-100 mb-6">Développeur Full Stack</p>
+        <!-- Profil Section -->
+        <div class="relative bg-gradient-to-br from-primary-500 via-primary-600 to-violet-600 dark:from-primary-600 dark:via-primary-700 dark:to-violet-700 p-8 lg:p-10 flex flex-col items-center lg:items-start text-center lg:text-left lg:w-2/5 overflow-hidden">
+          <!-- Decorative elements -->
+          <div class="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+          <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+          
+          <div class="relative z-10">
+            <div class="animate-scale-in mb-6">
+              <div class="relative inline-block">
+                <img src="./images/siby.jpg" alt="Siby Lassana" class="w-36 h-36 rounded-2xl border-4 border-white/30 shadow-2xl object-cover transform hover:scale-105 transition-transform duration-300">
+                <div class="absolute -bottom-2 -right-2 bg-green-500 w-5 h-5 rounded-full border-3 border-white"></div>
+              </div>
+            </div>
+            <h1 class="text-3xl font-bold text-white mb-2 tracking-tight">Siby Lassana</h1>
+            <p class="text-primary-100 mb-6 font-medium">Développeur Full Stack</p>
+            
+            <!-- Badge技能 -->
+            <div class="flex flex-wrap gap-2 justify-center lg:justify-start mb-6">
+              <span class="px-3 py-1 bg-white/20 rounded-full text-xs text-white font-medium">Bakend</span>
+              <span class="px-3 py-1 bg-white/20 rounded-full text-xs text-white font-medium">Frontend</span>
+              <span class="px-3 py-1 bg-white/20 rounded-full text-xs text-white font-medium">UI/UX</span>
+            </div>
+            
             <div class="flex space-x-4 justify-center lg:justify-start">
-              <a href="https://wa.me/784502133" target="_blank" class="text-white hover:text-blue-200 transition-colors">
-                <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" class="w-8 h-8" />
+              <a href="https://wa.me/784502133" target="_blank" class="p-2.5 bg-white/20 rounded-xl hover:bg-white/30 transition-all duration-300 hover:scale-110">
+                <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" class="w-6 h-6" />
               </a>
-              <a href="https://github.com/sibylassana95" target="_blank" class="text-white hover:text-blue-200 transition-colors">
-                <img src="https://img.icons8.com/ios-glyphs/30/000000/github.png" class="w-8 h-8" />
+              <a href="https://github.com/sibylassana95" target="_blank" class="p-2.5 bg-white/20 rounded-xl hover:bg-white/30 transition-all duration-300 hover:scale-110">
+                <img src="https://img.icons8.com/ios-glyphs/30/ffffff/github.png" class="w-6 h-6" />
               </a>
-              <a href="https://www.linkedin.com/in/sibylassana" target="_blank" class="text-white hover:text-blue-200 transition-colors">
-                <img src="https://img.icons8.com/color/48/linkedin.png" class="w-8 h-8" />
+              <a href="https://www.linkedin.com/in/sibylassana" target="_blank" class="p-2.5 bg-white/20 rounded-xl hover:bg-white/30 transition-all duration-300 hover:scale-110">
+                <img src="https://img.icons8.com/color/48/ffffff/linkedin.png" class="w-6 h-6" />
               </a>
             </div>
           </div>
         </div>
 
-        <!-- Réseaux & liens -->
-        <div class="p-8 lg:p-12 lg:w-2/3">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Links Section -->
+        <div class="p-6 lg:p-8 lg:w-3/5 bg-white/50 dark:bg-dark-100/50">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-5 flex items-center gap-2">
+            <span class="w-1 h-6 bg-gradient-to-b from-primary-500 to-violet-500 rounded-full"></span>
+            Mes liens
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             
             <!-- YouTube -->
-            <a href="https://youtube.com/@sibylassana95" target="_blank" class="group bg-white dark:bg-dark-100 rounded-xl p-6 flex items-center space-x-4 hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-dark-200">
-              <div class="bg-red-50 dark:bg-dark-200 p-3 rounded-lg group-hover:bg-red-100 dark:group-hover:bg-dark-300 transition-colors">
-                <img src="https://img.icons8.com/color/48/000000/youtube-play.png" class="w-8 h-8" />
+            <a href="https://youtube.com/@sibylassana95" target="_blank" class="link-card group bg-white dark:bg-dark-200 rounded-2xl p-4 flex items-center space-x-3 hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-dark-300 gradient-border">
+              <div class="link-icon bg-red-50 dark:bg-red-900/30 p-3 rounded-xl">
+                <img src="https://img.icons8.com/color/48/000000/youtube-play.png" class="w-6 h-6" />
               </div>
-              <div>
-                <p class="font-semibold text-gray-800 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">SibyTech</p>
-                <span class="text-xs bg-red-600 text-white px-2 py-1 rounded-full">Abonnez-vous</span>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 dark:text-white truncate group-hover:text-red-500 transition-colors">SibyTech</p>
+                <span class="text-xs bg-red-500 text-white px-2 py-0.5 rounded-full">YouTube</span>
               </div>
             </a>
 
             <!-- Instagram -->
-            <a href="https://instagram.com/siby_global" target="_blank" class="group bg-white dark:bg-dark-100 rounded-xl p-6 flex items-center space-x-4 hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-dark-200">
-              <div class="bg-purple-50 dark:bg-dark-200 p-3 rounded-lg group-hover:bg-purple-100 dark:group-hover:bg-dark-300 transition-colors">
-                <img src="https://img.icons8.com/fluency/48/instagram-new.png" class="w-8 h-8" />
+            <a href="https://instagram.com/siby_global" target="_blank" class="link-card group bg-white dark:bg-dark-200 rounded-2xl p-4 flex items-center space-x-3 hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-dark-300">
+              <div class="link-icon bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/30 dark:to-pink-900/30 p-3 rounded-xl">
+                <img src="https://img.icons8.com/fluency/48/instagram-new.png" class="w-6 h-6" />
               </div>
-              <div>
-                <p class="font-semibold text-gray-800 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">@siby_global</p>
-                <span class="text-xs bg-blue-500 text-white px-2 py-1 rounded-full">Suiver moi</span>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 dark:text-white truncate group-hover:text-purple-500 transition-colors">@siby_global</p>
+                <span class="text-xs bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 py-0.5 rounded-full">Instagram</span>
               </div>
             </a>
 
             <!-- X(Twitter) -->
-            <a href="https://x.com/sibyog13" target="_blank" class="group bg-white dark:bg-dark-100 rounded-xl p-6 flex items-center space-x-4 hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-dark-200">
-              <div class="bg-gray-50 dark:bg-dark-200 p-3 rounded-lg group-hover:bg-gray-100 dark:group-hover:bg-dark-300 transition-colors">
-                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
+            <a href="https://x.com/sibyog13" target="_blank" class="link-card group bg-white dark:bg-dark-200 rounded-2xl p-4 flex items-center space-x-3 hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-dark-300">
+              <div class="link-icon bg-gray-50 dark:bg-gray-800 p-3 rounded-xl">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                 </svg>
               </div>
-              <div>
-                <p class="font-semibold text-gray-800 dark:text-white group-hover:text-gray-600 dark:group-hover:text-gray-400 transition-colors">X</p>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 dark:text-white truncate group-hover:text-gray-600 dark:group-hover:text-gray-400 transition-colors">X (Twitter)</p>
                 <p class="text-sm text-gray-500 dark:text-gray-400">@sibyog13</p>
               </div>
             </a>
 
             <!-- Facebook -->
-            <a href="https://www.facebook.com/sibyog/" target="_blank" class="group bg-white dark:bg-dark-100 rounded-xl p-6 flex items-center space-x-4 hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-dark-200">
-              <div class="bg-blue-50 dark:bg-dark-200 p-3 rounded-lg group-hover:bg-blue-100 dark:group-hover:bg-dark-300 transition-colors">
-                <img src="https://img.icons8.com/color/48/facebook.png" class="w-8 h-8" />
+            <a href="https://www.facebook.com/sibyog/" target="_blank" class="link-card group bg-white dark:bg-dark-200 rounded-2xl p-4 flex items-center space-x-3 hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-dark-300">
+              <div class="link-icon bg-blue-50 dark:bg-blue-900/30 p-3 rounded-xl">
+                <img src="https://img.icons8.com/color/48/facebook.png" class="w-6 h-6" />
               </div>
-              <div>
-                <p class="font-semibold text-gray-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Facebook</p>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 dark:text-white truncate group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Facebook</p>
                 <p class="text-sm text-gray-500 dark:text-gray-400">@sibyog</p>
               </div>
             </a>
 
             <!-- Behance -->
-            <a href="https://behance.net/sibylassana" target="_blank" class="group bg-white dark:bg-dark-100 rounded-xl p-6 flex items-center space-x-4 hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-dark-200">
-              <div class="bg-blue-50 dark:bg-dark-200 p-3 rounded-lg group-hover:bg-blue-100 dark:group-hover:bg-dark-300 transition-colors">
-                <img src="https://img.icons8.com/color/48/behance.png" class="w-8 h-8" />
+            <a href="https://behance.net/sibylassana" target="_blank" class="link-card group bg-white dark:bg-dark-200 rounded-2xl p-4 flex items-center space-x-3 hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-dark-300">
+              <div class="link-icon bg-blue-50 dark:bg-blue-900/30 p-3 rounded-xl">
+                <img src="https://img.icons8.com/color/48/behance.png" class="w-6 h-6" />
               </div>
-              <div>
-                <p class="font-semibold text-gray-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Behance</p>
-                <span class="text-xs bg-blue-600 text-white px-2 py-1 rounded-full">Ui design</span>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 dark:text-white truncate group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Behance</p>
+                <span class="text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full">Design</span>
               </div>
             </a>
 
             <!-- Site perso -->
-            <a href="https://sibylassana.vercel.app" target="_blank" class="group bg-white dark:bg-dark-100 rounded-xl p-6 flex items-center space-x-4 hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-dark-200">
-              <div class="bg-gray-50 dark:bg-dark-200 p-3 rounded-lg group-hover:bg-gray-100 dark:group-hover:bg-dark-300 transition-colors">
-                <img src="https://img.icons8.com/color/48/domain--v1.png" class="w-8 h-8" />
+            <a href="https://lassanasiby.com" target="_blank" class="link-card group bg-white dark:bg-dark-200 rounded-2xl p-4 flex items-center space-x-3 hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-dark-300">
+              <div class="link-icon bg-gradient-to-br from-primary-50 to-violet-50 dark:from-primary-900/30 dark:to-violet-900/30 p-3 rounded-xl">
+                <img src="https://img.icons8.com/color/48/domain--v1.png" class="w-6 h-6" />
               </div>
-              <div>
-                <p class="font-semibold text-gray-800 dark:text-white group-hover:text-gray-600 dark:group-hover:text-gray-400 transition-colors">Portfolio</p>
-                <p class="text-sm text-gray-500 dark:text-gray-400">sibylassana.vercel.app</p>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 dark:text-white truncate group-hover:text-primary-500 transition-colors">Portfolio</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">lassanasiby.com</p>
               </div>
             </a>
 
@@ -189,6 +273,11 @@
         </div>
       </div>
     </div>
+    
+    <!-- Footer -->
+    <p class="text-center text-gray-400 dark:text-gray-500 text-sm mt-6 animate-fade-in" style="animation-delay: 0.3s;">
+      © 2026 Siby Lassana. Tous droits réservés.
+    </p>
   </div>
 
   <script src="script.js"></script>

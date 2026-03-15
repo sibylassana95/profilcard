@@ -88,5 +88,5 @@ Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de 
 **Siby Lassana**
 - GitHub: [@sibylassana95](https://github.com/sibylassana95)
 - LinkedIn: [sibylassana](https://www.linkedin.com/in/sibylassana)
-- Portfolio: [sibylassana.vercel.app](https://sibylassana.vercel.app)
+- Portfolio: [lassanasiby.com](https://lassanasiby.com)
 
